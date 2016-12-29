@@ -1,29 +1,35 @@
 class ToyRobot::Robot
-  def initialize(surface = nil)
-    @surface = Movements::Null.new
+  def initialize(table_placement)
+    @table_placement = table_placement
   end
 
-  def place(surface)
-    Robot.new(surface)
+  def place(table_placement)
+    Robot.new(table_placement)
   end
 
   def left
-    Robot.new(@surface.left)
+    Robot.new(@table_placement.left)
   end
 
   def right
-    Robot.new(@surface.right)
+    Robot.new(@table_placement.right)
   end
 
   def move
-    Robot.new(@surface.move)
+    next_table_placement = @table_placement.move
+
+    if next_table_placement.within_bounds?
+      Robot.new(next_table_placement)
+    else
+      self
+    end
   end
 
   def report
     "%s, %s, %s" % [
-      @surface.location.x,
-      @surface.location.y,
-      @surface.location.orientation.to_s.upcase
+      @table_placement.x,
+      @table_placement.y,
+      @table_placement.orientation.to_s.upcase
     ]
   end
 end

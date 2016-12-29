@@ -1,12 +1,17 @@
-class ToyRobot::CLI < Struct.new(:robot, :commands)
-  def process_line(line)
-    return if line.nil?
+require 'toy_robot/unplaced_robot'
+require 'toy_robot/command_interpreter'
+require 'toy_robot/tokenizer'
 
-    tokens = TokenizedLine.new(line)
-    command = commands.construct(tokens.cmd, tokens.args)
+module ToyRobot
+  class CLI
+    def initialize
+      @robot = UnplacedRobot.new
+      @command_interpreter = CommandInterpreter.new(Tokenizer.new)
+    end
 
-    if command
-      @robot = command.perform(robot)
+    def process_line(line)
+      command = @command_interpreter.process(command)
+      @robot = command.perform(@robot)
       puts command.output if command.output
     end
   end

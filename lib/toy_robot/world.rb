@@ -1,2 +1,0 @@
-class ToyRobot::World
-end

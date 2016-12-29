@@ -2,8 +2,7 @@
 
 require 'toy_robot'
 
-world = ToyRobot::World.new
-cli = ToyRobot::CLI.new(world)
+cli = ToyRobot::CLI.new
 
 interactive_mode = ARGF.filename == "-" && STDIN.tty?
 
