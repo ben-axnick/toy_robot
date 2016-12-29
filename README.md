@@ -1,4 +1,28 @@
-# Toy Robot Simulator
+# Toy Robot
+
+## Dependencies
+
+- Ruby 2.x
+- Bundler 1.x
+
+Execute `bundle install` prior to running the application or specs.
+
+## Running
+
+The toy robot uses Bundler to manage dependencies and as such execution should
+be prefixed by `bundle exec`. Three modes of interaction are supported:
+
+- Start interactively: `bundle exec ./bin/runner.rb`
+- Stream input via stdin: `echo "FOO\nBAR" | bundle exec ./bin/runner.rb` 
+- Pass filenames as arguments: `bundle exec ./bin/runner.rb examples/a.txt`
+
+## Testing
+
+```
+bundle exec rspec
+```
+
+# Original Instructions
 
 ## Description
 - The application is a simulation of a toy robot moving on a square tabletop, of dimensions 5 units x 5 units.
