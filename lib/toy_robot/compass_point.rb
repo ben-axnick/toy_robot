@@ -1,16 +1,27 @@
-class ToyRobot::CompassPoint < Struct.new(:x, :y, :orientation)
+class ToyRobot::TablePlacement < Struct.new(:x, :y, :orientation)
   ORIENTATIONS = %i(north east south west)
 
+  X_BOUNDS = (0..4)
+  Y_BOUNDS = (0..4)
+
   def move
-    CompassPoint.new(@x + move_vector.x, @y + move_vector.y, @orientation)
+    TablePlacement.new(@x + move_vector.x, @y + move_vector.y, @orientation)
   end
 
   def left
-    CompassPoint.new(@x, @y, reorient(-1))
+    TablePlacement.new(@x, @y, reorient(-1))
   end
 
   def right
-    CompassPoint.new(@x, @y, reorient(1))
+    TablePlacement.new(@x, @y, reorient(1))
+  end
+
+  def within_bounds?
+    X_BOUNDS.include?(@x) && Y_BOUNDS.include?(@y)
+  end
+
+  def self.valid_orientation?(orientation)
+    ORIENTATIONS.include?(orientation)
   end
 
   private
