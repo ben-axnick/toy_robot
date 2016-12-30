@@ -4,6 +4,12 @@ module ToyRobot
       def initialize(*_)
       end
 
+      def perform(_)
+      end
+
+      def output
+      end
+
       def self.matches?
         true
       end
