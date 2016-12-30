@@ -6,7 +6,7 @@ describe ToyRobot::UnplacedRobot do
       unplaced_robot = described_class.new
       location = instance_double(ToyRobot::TablePlacement)
 
-      expect(unplaced_robot.place(location)).to be_kind_of(Robot)
+      expect(unplaced_robot.place(location)).to be_kind_of(ToyRobot::Robot)
     end
   end
 end
