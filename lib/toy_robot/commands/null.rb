@@ -10,7 +10,7 @@ module ToyRobot
       def output
       end
 
-      def self.matches?
+      def self.matches?(_)
         true
       end
     end

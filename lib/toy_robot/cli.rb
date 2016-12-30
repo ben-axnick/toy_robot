@@ -6,7 +6,7 @@ module ToyRobot
   class CLI
     def initialize(robot: nil, command_interpreter: nil)
       @robot = UnplacedRobot.new
-      @command_interpreter = command_interpreter || CommandInterpreter.new(Tokenizer.new)
+      @command_interpreter = command_interpreter || CommandInterpreter.new
     end
 
     def process_line(line)
