@@ -4,7 +4,11 @@ class ToyRobot::Robot
   end
 
   def place(table_placement)
-    Robot.new(table_placement)
+    if table_placement.within_bounds?
+      Robot.new(table_placement)
+    else
+      self
+    end
   end
 
   def left

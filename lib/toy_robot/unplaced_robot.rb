@@ -1,20 +1,21 @@
-class ToyRobot::UnplacedRobot
-  def initialize
-  end
+require "toy_robot/robot"
 
-  def place(location)
-    Robot.new(location)
-  end
+module ToyRobot
+  class UnplacedRobot
+    def place(location)
+      Robot.new(location)
+    end
 
-  def left
-  end
+    def left
+    end
 
-  def right
-  end
+    def right
+    end
 
-  def move
-  end
+    def move
+    end
 
-  def report
+    def report
+    end
   end
 end
