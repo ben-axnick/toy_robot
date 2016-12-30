@@ -1,32 +1,24 @@
 module ToyRobot
-  class TablePlacement
+  class TablePlacement < Struct.new(:x, :y, :orientation)
     ORIENTATIONS = %i(north east south west)
 
     X_BOUNDS = (0..4)
     Y_BOUNDS = (0..4)
 
-    attr_reader :x, :y, :orientation
-
-    def initialize(x, y, orientation)
-      @x = x
-      @y = y
-      @orientation = orientation
-    end
-
     def move
-      TablePlacement.new(@x + move_vector.x, @y + move_vector.y, @orientation)
+      TablePlacement.new(x + move_vector.x, y + move_vector.y, orientation)
     end
 
     def left
-      TablePlacement.new(@x, @y, reorient(-1))
+      TablePlacement.new(x, y, reorient(-1))
     end
 
     def right
-      TablePlacement.new(@x, @y, reorient(1))
+      TablePlacement.new(x, y, reorient(1))
     end
 
     def within_bounds?
-      X_BOUNDS.include?(@x) && Y_BOUNDS.include?(@y)
+      X_BOUNDS.include?(x) && Y_BOUNDS.include?(y)
     end
 
     def valid_orientation?
@@ -55,7 +47,7 @@ module ToyRobot
     end
 
     def reorient(increments)
-      ORIENTATIONS.rotate(ORIENTATIONS.index(@orientation) + increments).first
+      ORIENTATIONS.rotate(ORIENTATIONS.index(orientation) + increments).first
     end
   end
 end
