@@ -3,9 +3,11 @@ module ToyRobot
     TokenizedLine = Struct.new(:cmd, :args)
 
     def tokenize(line)
+      tokens = whitespace_tokens(line)
+
       TokenizedLine.new(
-        whitespace_tokens(line).first,
-        whitespace_tokens(line)[1..-1].split(',').map(&:strip)
+        cmd(tokens),
+        args(tokens)
       )
     end
 
@@ -13,6 +15,15 @@ module ToyRobot
 
     def whitespace_tokens(line)
       line.strip.downcase.split(' ')
+    end
+
+    def cmd(tokens)
+      tokens.first
+    end
+
+    def args(tokens)
+      args = tokens[1..-1] || []
+      args.join(' ').split(',').map(&:strip)
     end
   end
 end
