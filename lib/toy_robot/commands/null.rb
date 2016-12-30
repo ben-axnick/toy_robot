@@ -4,7 +4,8 @@ module ToyRobot
       def initialize(*_)
       end
 
-      def perform(_)
+      def perform(robot)
+        robot
       end
 
       def output

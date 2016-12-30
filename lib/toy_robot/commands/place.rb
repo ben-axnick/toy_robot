@@ -1,7 +1,7 @@
 module ToyRobot
   module Commands
     class Place
-      def initialize(x, y, orientation)
+      def initialize(x = nil, y = nil, orientation = nil)
         @x = x
         @y = y
         @orientation = orientation

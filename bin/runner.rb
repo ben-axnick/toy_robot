@@ -10,8 +10,12 @@ if interactive_mode
   puts "Starting in interactive mode."
 
   while (input = gets.chomp)
-    cli.process_line(input)
+    output = cli.process_line(input)
+    puts output if output
   end
 else
-  ARGF.read.split(?\n).each { |line| cli.process_line(line) }
+  ARGF.read.split(?\n).each { |line|
+    output = cli.process_line(line)
+    puts output if output
+  }
 end
