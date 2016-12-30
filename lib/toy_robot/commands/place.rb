@@ -1,10 +1,6 @@
-require 'toy_robot/commands/named'
-
 module ToyRobot
   module Commands
     class Place < Struct.new(:x, :y, :orientation)
-      include Named
-
       def perform(robot)
         return unless valid?
 
@@ -16,6 +12,10 @@ module ToyRobot
       def valid?
         TablePlacement.valid_orientation?(orientation) &&
           TablePlacement.new(@x, @y, @orientation).within_bounds?
+      end
+
+      def self.matches?(cmd)
+        cmd == "place"
       end
 
       private
