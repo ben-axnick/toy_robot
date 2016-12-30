@@ -10,8 +10,7 @@ module ToyRobot
       end
 
       def valid?
-        TablePlacement.valid_orientation?(orientation) &&
-          TablePlacement.new(@x, @y, @orientation).within_bounds?
+        TablePlacement.new(@x, @y, @orientation).valid?
       end
 
       def self.matches?(cmd)
