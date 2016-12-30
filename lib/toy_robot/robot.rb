@@ -1,5 +1,7 @@
 module ToyRobot
   class Robot
+    attr_reader :table_placement
+
     def initialize(table_placement)
       @table_placement = table_placement
     end
@@ -32,9 +34,9 @@ module ToyRobot
 
     def report
       "%s, %s, %s" % [
-        @table_placement.x,
-        @table_placement.y,
-        @table_placement.orientation.to_s.upcase
+        table_placement.x,
+        table_placement.y,
+        table_placement.orientation.to_s.upcase
       ]
     end
   end
