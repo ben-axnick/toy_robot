@@ -1,18 +1,16 @@
-require 'toy_robot/commands/left'
-require 'toy_robot/commands/move'
 require 'toy_robot/commands/null'
 require 'toy_robot/commands/place'
 require 'toy_robot/commands/report'
-require 'toy_robot/commands/right'
+require 'toy_robot/commands/simple'
 
 module ToyRobot
   module Commands
     DEFAULT = [
-      Left,
-      Move,
       Place,
       Report,
-      Right,
+      Simple.construct(:left),
+      Simple.construct(:right),
+      Simple.construct(:move),
     ]
   end
 end

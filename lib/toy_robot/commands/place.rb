@@ -1,6 +1,8 @@
+require "toy_robot/commands/simple"
+
 module ToyRobot
   module Commands
-    class Place
+    class Place < ToyRobot::Commands::Simple.construct(:place)
       def initialize(x = nil, y = nil, orientation = nil)
         @x = x
         @y = y
@@ -18,13 +20,6 @@ module ToyRobot
       def valid?
         valid_x? && valid_y? && valid_orientation? &&
           TablePlacement.new(x, y, orientation).valid?
-      end
-
-      def output
-      end
-
-      def self.matches?(cmd)
-        cmd == "place"
       end
 
       private
