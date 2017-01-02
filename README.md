@@ -1,5 +1,10 @@
 # Toy Robot
 
+Note: Whilst this has a full, passing, test suite. I'm still refactoring toward
+the best possible solution, and there's plenty of sharp edges. I'm committing blocks
+of code as-is. In a production scenario, I'd be rebasing like David Tennant to
+keep commit history free of spurious detail.
+
 ## Dependencies
 
 - Ruby 2.x
@@ -22,9 +27,20 @@ be prefixed by `bundle exec`. Three modes of interaction are supported:
 bundle exec rspec
 ```
 
-# Original Instructions
+## Upcoming work
 
-## Description
+- Metaprogramming of commands needs to be toned down. I think I'll draw the
+    line at inheriting from dynamic base classes.
+- Need a test calling the runner so that full end-to-end coverage is achieved
+- Need to fix the weakness of the `orientation` variable. It's 90% of
+    `TablePlacement` and should clearly just be its own data structure.
+- Need to think about PORO coercions and validations in general an how that
+    should be structured sanely. Basically I want
+    [Virtus](https://github.com/solnic/virtus), but I don't want to pull the
+    dependency since it's overkill for two ints and an enum
+
+## The Spec
+
 - The application is a simulation of a toy robot moving on a square tabletop, of dimensions 5 units x 5 units.
 - There are no other obstructions on the table surface.
 - The robot is free to roam around the surface of the table, but must be prevented from falling to destruction. Any movement
@@ -47,35 +63,5 @@ Create an application that can read in commands of the following form
 - REPORT will announce the X,Y and F of the robot. This can be in any form, but standard output is sufficient.
 - A robot that is not on the table can choose the ignore the MOVE, LEFT, RIGHT and REPORT commands.
 - Input can be from a file, or from standard input, as the developer chooses.
-- Provide test data to exercise the application.
-
-## Constraints
-
-The toy robot must not fall off the table during movement. This also includes the initial placement of the toy robot.
-Any move that would cause the robot to fall must be ignored.
-
-## Example Input and Output
-
-a)
-
-    PLACE 0,0,NORTH
-    MOVE
-    REPORT
-    Output: 0,1,NORTH
-
-b)
-
-    PLACE 0,0,NORTH
-    LEFT
-    REPORT
-    Output: 0,0,WEST
-
-c)
-
-    PLACE 1,2,EAST
-    MOVE
-    MOVE
-    LEFT
-    MOVE
-    REPORT
-    Output: 3,3,NORTH
+- The toy robot must not fall off the table during movement. This also includes the initial placement of the toy robot.
+- Any move that would cause the robot to fall must be ignored.
