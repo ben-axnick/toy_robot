@@ -5,7 +5,7 @@ module ToyRobot
       end
 
       def perform(robot)
-        robot
+        Result.new(robot)
       end
 
       def output

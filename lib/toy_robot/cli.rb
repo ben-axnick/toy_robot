@@ -11,9 +11,10 @@ module ToyRobot
 
     def process_line(line)
       command = @command_interpreter.process(line)
-      @robot = command.perform(@robot)
+      result = command.perform(@robot)
 
-      command.output
+      @robot = result.robot
+      result.output
     end
   end
 end

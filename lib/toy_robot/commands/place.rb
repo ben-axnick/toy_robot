@@ -10,10 +10,12 @@ module ToyRobot
       end
 
       def perform(robot)
-        return robot unless valid?
+        return Result.new(robot) unless valid?
 
-        robot.place(
-          TablePlacement.new(x, y, orientation)
+        Result.new(
+          robot.place(
+            TablePlacement.new(x, y, orientation)
+          )
         )
       end
 

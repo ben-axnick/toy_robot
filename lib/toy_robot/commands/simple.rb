@@ -9,7 +9,9 @@ module ToyRobot
           end
 
           define_method(:perform) do |robot|
-            robot.public_send(robot_method)
+            Result.new(
+              robot.public_send(robot_method)
+            )
           end
 
           define_singleton_method(:matches?) do |cmd|
