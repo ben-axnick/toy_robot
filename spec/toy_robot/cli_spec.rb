@@ -3,9 +3,9 @@ require 'spec_helper'
 describe ToyRobot::CLI do
   subject(:cli) { described_class.new(command_interpreter: command_interpreter) }
   let(:command_interpreter) {
-    instance_double(ToyRobot::CommandInterpreter, process: dummy_command)
+    instance_double(ToyRobot::CommandInterpreter, process: dummy_action)
   }
-  let(:dummy_command) { instance_double(ToyRobot::Commands::Null, perform: dummy_result) }
+  let(:dummy_action) { double(perform: dummy_result) }
   let(:dummy_result) { ToyRobot::Commands::Result.new }
 
   it "causes the interpreter to process the line" do

@@ -3,22 +3,24 @@ require "toy_robot/tokenizer"
 
 module ToyRobot
   class CommandInterpreter
-    def initialize(tokenizer: nil, commands: nil, fallback: nil)
+    def initialize(tokenizer: nil, commands: nil)
       @tokenizer = tokenizer || Tokenizer.new
-      @commands = commands   || Commands::DEFAULT
-      @fallback = fallback   || Commands::Null
+      @commands = commands || Commands::DEFAULT
     end
 
     def process(line)
       tokens = @tokenizer.tokenize(line)
-      found = commands.detect { |command| command.matches?(tokens.cmd) }
-      found.new(*tokens.args)
+
+      commands
+        .lazy
+        .map { |command| command.action(tokens) }
+        .detect { |action| !action.nil? }
     end
 
     private
 
     def commands
-      @commands | [@fallback]
+      @commands | [Commands::Null]
     end
   end
 end

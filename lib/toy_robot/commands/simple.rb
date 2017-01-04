@@ -1,21 +1,21 @@
 module ToyRobot
   module Commands
     class Simple
-      def self.construct(robot_method)
-        Class.new do
-          attr_reader :output
+      def initialize(trigger, action)
+        @trigger = trigger
+        @action = action
+      end
 
-          def initialize(*_)
-          end
+      def action(tokens)
+        action_klass.new(@action) if @trigger.to_s == tokens.cmd
+      end
 
-          define_method(:perform) do |robot|
-            Result.new(
-              robot.public_send(robot_method)
-            )
-          end
+      private
 
-          define_singleton_method(:matches?) do |cmd|
-            robot_method.to_s == cmd
+      def action_klass
+        Struct.new(:action) do
+          def perform(robot)
+            Result.new(action.call(robot))
           end
         end
       end

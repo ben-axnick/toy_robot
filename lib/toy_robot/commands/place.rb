@@ -2,52 +2,35 @@ require "toy_robot/commands/simple"
 
 module ToyRobot
   module Commands
-    class Place < ToyRobot::Commands::Simple.construct(:place)
-      def initialize(x = nil, y = nil, orientation = nil)
-        @x = x
-        @y = y
-        @orientation = orientation
+    class Place
+      class Action
+        def initialize(x, y, orientation)
+          @x = x
+          @y = y
+          @orientation = orientation
+        end
+
+        def perform(robot)
+          desired_placement = TablePlacement.new(@x, @y, @orientation)
+
+          if desired_placement.valid?
+            Result.new(robot.place(desired_placement))
+          else
+            Result.new(robot)
+          end
+        end
       end
 
-      def perform(robot)
-        return Result.new(robot) unless valid?
+      def action(tokens)
+        return unless tokens.cmd == "place"
 
-        Result.new(
-          robot.place(
-            TablePlacement.new(x, y, orientation)
-          )
-        )
-      end
+        x = Integer(tokens.args[0]) rescue nil
+        y = Integer(tokens.args[1]) rescue nil
+        orientation = tokens.args[2]
 
-      def valid?
-        valid_x? && valid_y? && valid_orientation? &&
-          TablePlacement.new(x, y, orientation).valid?
-      end
-
-      private
-
-      def x
-        @x.to_i
-      end
-
-      def valid_x?
-        Integer(@x) rescue false
-      end
-
-      def y
-        @y.to_i
-      end
-
-      def valid_y?
-        Integer(@y) rescue false
-      end
-
-      def orientation
-        @orientation && @orientation.downcase.to_sym
-      end
-
-      def valid_orientation?
-        !@orientation.nil?
+        if x && y && orientation
+          Action.new(x, y, orientation.to_sym)
+        end
       end
     end
   end

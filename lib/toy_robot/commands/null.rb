@@ -1,18 +1,14 @@
 module ToyRobot
   module Commands
     class Null
-      def initialize(*_)
+      class Action
+        def self.perform(robot)
+          Result.new(robot)
+        end
       end
-
-      def perform(robot)
-        Result.new(robot)
-      end
-
-      def output
-      end
-
-      def self.matches?(_)
-        true
+      
+      def self.action(_)
+        Action
       end
     end
   end

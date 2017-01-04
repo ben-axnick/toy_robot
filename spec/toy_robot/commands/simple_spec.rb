@@ -1,28 +1,32 @@
 require "spec_helper"
 
 describe ToyRobot::Commands::Simple do
-  describe ".construct" do
-    context "an instance of the constructed class" do
-      subject(:command) { described_class.construct(:simple).new }
+  subject(:command) { described_class.new(:simple, Proc.new {}) }
 
-      describe "#perform" do
-        it "it returns the result of executing against the bot" do
-          expected_response = double
-          robot = double(simple: expected_response)
+  describe "#action" do
+    it "returns a performable action when the command matches" do
+      tokens = ToyRobot::Tokenizer.new.tokenize("simple")
+      expect(command.action(tokens)).to respond_to(:perform)
+    end
 
-          expect(command.perform(robot)).to eq(expected_response)
-        end
-      end
+    it "returns nil when the command does not match" do
+      tokens = ToyRobot::Tokenizer.new.tokenize("simpler")
+      expect(command.action(tokens)).to be_nil
+    end
+  end
 
-      describe ".matches?" do
-        it "matches when cmd is simple" do
-          expect(command.class.matches?("simple")).to eq(true)
-        end
+  context "the returned action" do
+    subject(:action) {
+      tokens = ToyRobot::Tokenizer.new.tokenize("simple")
+      described_class.new(:simple, passed_proc).action(tokens)
+    }
+    let(:passed_proc) { instance_double(Proc) }
 
-        it "doesn't match arbitrary values" do
-          expect(command.class.matches?("simpler")).to eq(false)
-        end
-      end
+    it "it returns a Result with the result of the passed proc" do
+      robot = double
+      allow(passed_proc).to receive(:call).with(robot).and_return(:foo)
+
+      expect(action.perform(robot).robot).to eq(:foo)
     end
   end
 end

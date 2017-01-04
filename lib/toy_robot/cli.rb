@@ -4,7 +4,7 @@ require 'toy_robot/tokenizer'
 
 module ToyRobot
   class CLI
-    def initialize(robot: nil, command_interpreter: nil)
+    def initialize(command_interpreter: nil)
       @robot = UnplacedRobot.new
       @command_interpreter = command_interpreter || CommandInterpreter.new
     end
