@@ -2,57 +2,53 @@ require "spec_helper"
 
 describe ToyRobot::CommandInterpreter do
   let(:commands) { [] }
-  let(:fallback) { ToyRobot::Commands::Null }
+  let(:tokenizer) { ToyRobot::Tokenizer.new }
 
   subject(:command_interpreter) {
     described_class.new(
       commands: commands,
-      fallback: fallback
+      tokenizer: tokenizer,
     )
   }
 
-  def build_command(matches:)
-    class_double(
-      ToyRobot::Commands::Null,
-      matches?: matches,
-      new: nil
+  def build_command(action = nil)
+    instance_double(
+      ToyRobot::Commands::Simple,
+      action: action
     )
   end
 
   describe "#process" do
-    it "asks each command if it matches" do
-      my_command = build_command(matches: true)
+    it "passes the tokenized args to the #action method" do
+      allow(tokenizer).to \
+        receive(:tokenize).with("testing 1,2,3").and_return("foo")
+
+      my_command = build_command
       commands << my_command
 
-      command_interpreter.process("testing")
-      expect(my_command).to have_received(:matches?).with("testing")
+      command_interpreter.process("testing 1,2,3")
+      expect(my_command).to have_received(:action).with("foo")
     end
 
-    it "instantiates the first command that matches" do
-      no_match = build_command(matches: false)
-      match = build_command(matches: true)
+    it "returns the first action that resolves to non nil" do
+      match_action = double
+
+      no_match = build_command
+      match = build_command(match_action)
 
       commands << no_match
       commands << match
 
-      command_interpreter.process("testing")
-      expect(match).to have_received(:new)
+      result = command_interpreter.process("testing")
+      expect(result).to eq(match_action)
     end
 
-    it "passes the tokenizer args to the #new method" do
-      my_command = build_command(matches: true)
-      commands << my_command
-
-      command_interpreter.process("testing 1,2,3")
-      expect(my_command).to have_received(:new).with("1", "2", "3")
-    end
-
-    it "returns the fallback command when none match" do
-      no_match = build_command(matches: false)
-
+    it "returns the fallback action when none match" do
+      no_match = build_command
       commands << no_match
 
-      expect(command_interpreter.process("testing")).to be_instance_of(fallback)
+      expect(command_interpreter.process("testing")).to \
+        eq(ToyRobot::Commands::Null::Action)
     end
   end
 end
