@@ -5,6 +5,8 @@ require 'toy_robot/commands/simple'
 
 module ToyRobot
   module Commands
+    Result = Struct.new(:robot, :output)
+
     DEFAULT = [
       Place,
       Report,

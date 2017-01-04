@@ -5,7 +5,8 @@ describe ToyRobot::CLI do
   let(:command_interpreter) {
     instance_double(ToyRobot::CommandInterpreter, process: dummy_command)
   }
-  let(:dummy_command) { ToyRobot::Commands::Null.new }
+  let(:dummy_command) { instance_double(ToyRobot::Commands::Null, perform: dummy_result) }
+  let(:dummy_result) { ToyRobot::Commands::Result.new }
 
   it "causes the interpreter to process the line" do
     cli.process_line("HELLO")
@@ -13,7 +14,7 @@ describe ToyRobot::CLI do
   end
 
   it "returns the output of the command" do
-    allow(dummy_command).to receive(:output) { "YO" }
+    allow(dummy_result).to receive(:output) { "YO" }
 
     expect(cli.process_line("ANYONE THERE?")).to eq("YO")
   end
