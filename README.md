@@ -6,6 +6,10 @@
 [![Code Climate](https://codeclimate.com/github/bentheax/toy_robot/badges/gpa.svg)](https://codeclimate.com/github/bentheax/toy_robot)
 [![Test Coverage](https://codeclimate.com/github/bentheax/toy_robot/badges/coverage.svg)](https://codeclimate.com/github/bentheax/toy_robot/coverage)
 
+## Status
+
+[![Code Climate](https://codeclimate.com/github/bentheax/toy_robot/badges/gpa.svg)](https://codeclimate.com/github/bentheax/toy_robot)
+
 ## Dependencies
 
 - Ruby 2.x
