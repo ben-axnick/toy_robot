@@ -5,6 +5,10 @@ the best possible solution, and there's plenty of sharp edges. I'm committing bl
 of code as-is. In a production scenario, I'd be rebasing like David Tennant to
 keep commit history free of spurious detail.
 
+## Status
+
+[![Code Climate](https://codeclimate.com/github/bentheax/toy_robot/badges/gpa.svg)](https://codeclimate.com/github/bentheax/toy_robot)
+
 ## Dependencies
 
 - Ruby 2.x
