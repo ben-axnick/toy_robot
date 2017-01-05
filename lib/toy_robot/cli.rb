@@ -1,20 +1,15 @@
-require 'toy_robot/unplaced_robot'
-require 'toy_robot/command_interpreter'
-require 'toy_robot/tokenizer'
+require 'toy_robot/session'
 
 module ToyRobot
   class CLI
-    def initialize(command_interpreter: nil)
-      @robot = UnplacedRobot.new
-      @command_interpreter = command_interpreter || CommandInterpreter.new
-    end
+    def self.start(in_s, out_s)
+      out_s.puts "Starting in interactive mode." if in_s.tty?
+      session = Session.new
 
-    def process_line(line)
-      command = @command_interpreter.process(line)
-      result = command.perform(@robot)
-
-      @robot = result.robot
-      result.output
+      in_s.each_line.lazy
+        .map { |line| session.process_line(line) }
+        .reject { |output| output.nil? }
+        .each { |output| out_s.puts(output) }
     end
   end
 end

@@ -5,20 +5,17 @@ describe "executing plain text examples" do
 
   examples.each do |sample|
     it "passes for #{File.basename(sample)}" do
-      cli = ToyRobot::CLI.new
-      input = File.readlines(sample)
+      input = File.new(sample)
+      output = StringIO.new
+
+      ToyRobot::CLI.start(input, output)
 
       expectation_match = /Output: (.*)/
-
-      output = input.reduce([]) do |acc, line|
-        acc << cli.process_line(line)
-      end.compact
-
-      expected = input
+      expected = File.readlines(sample)
         .select { |line| line =~ expectation_match }
         .map { |line| line.match(expectation_match)[1] }
 
-      expect(output).to eq(expected)
+      expect(output.string.split("\n")).to eq(expected)
     end
   end
 end

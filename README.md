@@ -15,11 +15,10 @@ Execute `bundle install` prior to running the application or specs.
 ## Running
 
 The toy robot uses Bundler to manage dependencies and as such execution should
-be prefixed by `bundle exec`. Three modes of interaction are supported:
+be prefixed by `bundle exec`. Two modes of interaction are supported:
 
 - Start interactively: `bundle exec ./bin/runner.rb`
 - Stream input via stdin: `echo "FOO\nBAR" | bundle exec ./bin/runner.rb` 
-- Pass filenames as arguments: `bundle exec ./bin/runner.rb examples/a.txt`
 
 ## Testing
 
@@ -29,9 +28,6 @@ bundle exec rspec
 
 ## Upcoming work
 
-- Metaprogramming of commands needs to be toned down. I think I'll draw the
-    line at inheriting from dynamic base classes.
-- Need a test calling the runner so that full end-to-end coverage is achieved
 - Need to fix the weakness of the `orientation` variable. It's 90% of
     `TablePlacement` and should clearly just be its own data structure.
 - Need to think about PORO coercions and validations in general an how that
