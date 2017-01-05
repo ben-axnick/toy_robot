@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ToyRobot::CLI do
+describe ToyRobot::Session do
   subject(:cli) { described_class.new(command_interpreter: command_interpreter) }
   let(:command_interpreter) {
     instance_double(ToyRobot::CommandInterpreter, process: dummy_action)

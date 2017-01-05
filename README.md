@@ -16,11 +16,10 @@ Execute `bundle install` prior to running the application or specs.
 ## Running
 
 The toy robot uses Bundler to manage dependencies and as such execution should
-be prefixed by `bundle exec`. Three modes of interaction are supported:
+be prefixed by `bundle exec`. Two modes of interaction are supported:
 
-- Start interactively: `bundle exec ./bin/runner.rb`
-- Stream input via stdin: `echo "FOO\nBAR" | bundle exec ./bin/runner.rb` 
-- Pass filenames as arguments: `bundle exec ./bin/runner.rb examples/a.txt`
+- Start interactively: `bundle exec ./exe/toy_robot`
+- Stream input via stdin: `echo "FOO\nBAR" | bundle exec ./exe/toy_robot` 
 
 ## Testing
 
