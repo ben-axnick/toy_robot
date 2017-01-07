@@ -3,6 +3,10 @@ require "toy_robot/commands/simple"
 module ToyRobot
   module Commands
     class Place
+      def action(tokens)
+        TokenCoercer.new(tokens).to_action if tokens.cmd == "place"
+      end
+
       class Action
         def initialize(x, y, orientation)
           @x = x
@@ -21,15 +25,25 @@ module ToyRobot
         end
       end
 
-      def action(tokens)
-        return unless tokens.cmd == "place"
+      class TokenCoercer < SimpleDelegator
+        def to_action
+          if x && y && orientation
+            Action.new(x, y, orientation)
+          end
+        end
 
-        x = Integer(tokens.args[0]) rescue nil
-        y = Integer(tokens.args[1]) rescue nil
-        orientation = tokens.args[2]
+        private
 
-        if x && y && orientation
-          Action.new(x, y, orientation.to_sym)
+        def x
+          Integer(args[0]) rescue nil
+        end
+
+        def y
+          Integer(args[1]) rescue nil
+        end
+
+        def orientation
+          args[2] && args[2].to_sym
         end
       end
     end
