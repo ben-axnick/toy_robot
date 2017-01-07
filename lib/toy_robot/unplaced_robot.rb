@@ -11,15 +11,15 @@ module ToyRobot
     end
 
     def left
-      raise NotImplementedError
+      self
     end
 
     def right
-      raise NotImplementedError
+      self
     end
 
     def move
-      raise NotImplementedError
+      self
     end
 
     def report
