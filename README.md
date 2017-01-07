@@ -1,10 +1,5 @@
 # Toy Robot
 
-Note: Whilst this has a full, passing, test suite. I'm still refactoring toward
-the best possible solution, and there's plenty of sharp edges. I'm committing blocks
-of code as-is. In a production scenario, I'd be rebasing like David Tennant to
-keep commit history free of spurious detail.
-
 ## Status
 
 [![Build Status](https://travis-ci.org/bentheax/toy_robot.svg?branch=master)](https://travis-ci.org/bentheax/toy_robot)
@@ -28,18 +23,17 @@ be prefixed by `bundle exec`. Two modes of interaction are supported:
 
 ## Testing
 
+Continuous:
+
+```sh
+bundle exec guard
 ```
+
+Once off:
+
+```sh
 bundle exec rspec
 ```
-
-## Upcoming work
-
-- Need to fix the weakness of the `orientation` variable. It's 90% of
-    `TablePlacement` and should clearly just be its own data structure.
-- Need to think about PORO coercions and validations in general an how that
-    should be structured sanely. Basically I want
-    [Virtus](https://github.com/solnic/virtus), but I don't want to pull the
-    dependency since it's overkill for two ints and an enum
 
 ## The Spec
 
