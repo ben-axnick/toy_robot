@@ -34,9 +34,9 @@ module ToyRobot
 
     def report
       "%s, %s, %s" % [
-        table_placement.x,
-        table_placement.y,
-        table_placement.orientation.to_s.upcase
+        table_placement.position.x,
+        table_placement.position.y,
+        table_placement.orientation.to_s
       ]
     end
   end

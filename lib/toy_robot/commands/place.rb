@@ -3,48 +3,25 @@ require "toy_robot/commands/simple"
 module ToyRobot
   module Commands
     class Place
-      def action(tokens)
-        TokenCoercer.new(tokens).to_action if tokens.cmd == "place"
-      end
-
       class Action
-        def initialize(x, y, orientation)
-          @x = x
-          @y = y
-          @orientation = orientation
+        def initialize(placement)
+          @placement = placement
         end
 
         def perform(robot)
-          desired_placement = TablePlacement.new(@x, @y, @orientation)
-
-          if desired_placement.valid?
-            Result.new(robot.place(desired_placement))
-          else
-            Result.new(robot)
-          end
+          Result.new(robot.place(@placement))
         end
       end
 
-      class TokenCoercer < SimpleDelegator
-        def to_action
-          if x && y && orientation
-            Action.new(x, y, orientation)
-          end
+      class TokenActioner < SimpleDelegator
+        def action
+          placement = TablePlacement.place(args[0], args[1], args[2])
+          Action.new(placement) if placement
         end
+      end
 
-        private
-
-        def x
-          Integer(args[0]) rescue nil
-        end
-
-        def y
-          Integer(args[1]) rescue nil
-        end
-
-        def orientation
-          args[2] && args[2].to_sym
-        end
+      def action(tokens)
+        TokenActioner.new(tokens).action if tokens.cmd == "place"
       end
     end
   end

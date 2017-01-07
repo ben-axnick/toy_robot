@@ -6,16 +6,17 @@ describe ToyRobot::Commands::Place do
   context "the returned action" do
     describe "#perform" do
       it "returns a robot in the new placement" do
-        cmd = described_class::Action.new(0, 0, :south)
+        desired_placement = ToyRobot::TablePlacement.place(0, 0, :south)
+
+        cmd = described_class::Action.new(desired_placement)
         new_robot = cmd.perform(robot).robot
 
-        expect(new_robot.table_placement).to eq(
-          ToyRobot::TablePlacement.new(0, 0, :south)
-        )
+        expect(new_robot.table_placement).to eq(desired_placement)
       end
 
       it "ignores an off-the-table placement" do
-        cmd = described_class::Action.new(6, 6, :south)
+        desired_placement = ToyRobot::TablePlacement.place(6, 6, :south)
+        cmd = described_class::Action.new(desired_placement)
         new_robot = cmd.perform(robot).robot
 
         expect(new_robot).to_not respond_to(:table_placement)
