@@ -8,11 +8,13 @@
 
 ## Status
 
+[![Build Status](https://travis-ci.org/bentheax/toy_robot.svg?branch=master)](https://travis-ci.org/bentheax/toy_robot)
 [![Code Climate](https://codeclimate.com/github/bentheax/toy_robot/badges/gpa.svg)](https://codeclimate.com/github/bentheax/toy_robot)
+[![Test Coverage](https://codeclimate.com/github/bentheax/toy_robot/badges/coverage.svg)](https://codeclimate.com/github/bentheax/toy_robot/coverage)
 
 ## Dependencies
 
-- Ruby 2.x
+- Ruby 2.2.5+
 - Bundler 1.x
 
 Execute `bundle install` prior to running the application or specs.
