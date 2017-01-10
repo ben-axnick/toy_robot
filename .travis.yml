@@ -8,3 +8,5 @@ addons:
     repo_token: 3a37a7fd55b235694705c5bfaa46e0c520222e550fe18e71c5bf4c6a9bc6e4aa
 after_success:
   - bundle exec codeclimate-test-reporter
+notifications:
+  email: false
