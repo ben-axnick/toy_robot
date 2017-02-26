@@ -25,7 +25,7 @@ The toy robot uses Bundler to manage dependencies and as such execution should
 be prefixed by `bundle exec`. Two modes of interaction are supported:
 
 - Start interactively: `bundle exec ./exe/toy_robot`
-- Stream input via stdin: `echo "FOO\nBAR" | bundle exec ./exe/toy_robot` 
+- Stream input via stdin: `echo "FOO\nBAR" | bundle exec ./exe/toy_robot`
 
 ### Docker
 
@@ -39,29 +39,71 @@ docker-compose run --rm bundle exec ./exe/toy_robot
 
 ## Testing
 
-Continuous:
+### Continuous
 
 ```sh
 bundle exec guard
 ```
 
-Once off:
+### Once-off
 
 ```sh
 bundle exec rspec
 ```
 
-## Upcoming work
+### Test cases
 
-- Metaprogramming of commands needs to be toned down. I think I'll draw the
-    line at inheriting from dynamic base classes.
-- Need a test calling the runner so that full end-to-end coverage is achieved
-- Need to fix the weakness of the `orientation` variable. It's 90% of
-    `TablePlacement` and should clearly just be its own data structure.
-- Need to think about PORO coercions and validations in general an how that
-    should be structured sanely. Basically I want
-    [Virtus](https://github.com/solnic/virtus), but I don't want to pull the
-    dependency since it's overkill for two ints and an enum
+```sh
+bundle exec ./exe/toy_robot examples/a.txt
+```
+
+Note that examples in this folder are automatically detected and executed as
+full integration tests of the solution. There's no real need to run them
+individually except as your own sanity check.
+
+## How it works
+
+In general, whilst not being fully functionally programmed, this application has
+a heavy functional influence that holds immutability and statelessness to be
+worthwhile objectives.
+
+### The "main loop"
+
+`exe/toy_robot` provides an entry point, then `ToyRobot::CLI` takes over. The
+only job of this class is to handle IO streams. It initalises a `Session` which
+sets the initial state and maintains it over time. It passes on input to a
+`CommandInterpreter` which determines the appropriate action to take, and then
+_replaces_ its robot with the robot returned by the command, which may or may
+not be altered. Each subsequent command received will be executed against the
+current state.
+
+### The robot
+
+Starts out unplaced. An unplaced robot only knows how to be placed, and ignore
+commands. A placed robot can be moved and manipulated by calling methods that
+returns modified versions of itself. Had I known about it at the time, I may
+have used something like
+[hamsterdam](https://github.com/atomicobject/hamsterdam).
+
+### Movement
+
+Orientation, movement vectors etc all defer to `TablePlacement`, `Orientation`,
+and `Vector`. You may note that the table does not exist as a distinct object,
+this is because it serves no useful role in the simulation (at this point).
+
+### Commands
+
+A `CommandInterpreter` tokenizes a line and feeds the result to its registered
+commands, returning the first command that claims to match the input. Most
+commands, being fairly simple, do not have individual classes, but are
+constructed from a `Simple` class that takes a proc to execute. The `Wrapped`
+class is similar but does not expect a robot to be created. The `Place` command,
+having more complex validation requirements, _does_ have its own class.
+
+## What else do I want you to know?
+
+- This is exposed as an [API endpoint](https://github.com/bentheax/toy_robot_api). You should [give it a try](http://petstore.swagger.io/?url=https://toy-robot-api.pickaxe.me/assets/swagger.yaml#/default).
+- This is all continuously deployed in full public view. Sensitive credentials are provided in encrypted form so that all the code can be public without compromising my AWS account.
 
 ## The Spec
 
