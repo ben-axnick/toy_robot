@@ -4,4 +4,4 @@ trap("SIGINT") { exit 130 }
 
 require 'toy_robot'
 
-ToyRobot::CLI.start(STDIN, STDOUT)
+ToyRobot::CLI.start(ARGF.to_io, STDOUT)
