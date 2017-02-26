@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe ToyRobot::Robot do
   subject(:robot) { described_class.new(placement) }
-  let(:placement) { ToyRobot::TablePlacement.place(0, 0, :south) }
+  let(:placement) { ToyRobot::TablePlacement.place(0, 0, :north) }
 
   describe "#place" do
     it "returns a robot placed at the new location" do
@@ -24,14 +24,14 @@ describe ToyRobot::Robot do
   describe "#left" do
     it "returns a robot rotated to the left" do
       new_robot = robot.left
-      expect(new_robot.table_placement.orientation.label).to eq(:east)
+      expect(new_robot.table_placement.orientation.label).to eq(:west)
     end
   end
 
   describe "#right" do
     it "returns a robot rotated to the right" do
       new_robot = robot.right
-      expect(new_robot.table_placement.orientation.label).to eq(:west)
+      expect(new_robot.table_placement.orientation.label).to eq(:east)
     end
   end
 
@@ -40,13 +40,13 @@ describe ToyRobot::Robot do
       new_robot = robot.move
 
       expect(new_robot.table_placement).to eq(
-        ToyRobot::TablePlacement.place(0, 1, :south)
+        ToyRobot::TablePlacement.place(0, 1, :north)
       )
     end
 
     it "ignores out-of-bounds movement" do
       teetering_robot = ToyRobot::Robot.new(
-        ToyRobot::TablePlacement.place(0, 0, :north)
+        ToyRobot::TablePlacement.place(0, 0, :south)
       )
 
       new_robot = teetering_robot.move
@@ -57,7 +57,7 @@ describe ToyRobot::Robot do
 
   describe "#report" do
     it "returns string formatted as x, y, orientation" do
-      expect(robot.report).to eq("0, 0, SOUTH")
-    end 
+      expect(robot.report).to eq("0, 0, NORTH")
+    end
   end
 end

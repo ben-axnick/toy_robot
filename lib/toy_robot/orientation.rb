@@ -5,9 +5,9 @@ module ToyRobot
     def self.to_a
       [
         new(:east, Vector.new(1, 0)),
-        new(:north, Vector.new(0, -1)),
+        new(:north, Vector.new(0, 1)),
         new(:west, Vector.new(-1, 0)),
-        new(:south, Vector.new(0, 1))
+        new(:south, Vector.new(0, -1))
       ]
     end
 

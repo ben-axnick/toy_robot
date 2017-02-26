@@ -27,9 +27,9 @@ describe ToyRobot::TablePlacement do
 
   describe "#move" do
     expectations = {
-      north: [0, -1],
+      north: [0, 1],
       east: [1, 0],
-      south: [0, 1],
+      south: [0, -1],
       west: [-1, 0]
     }
 
@@ -51,7 +51,7 @@ describe ToyRobot::TablePlacement do
       expect(new_placement.orientation.label).to eq(:west)
     end
   end
-  
+
   describe "#right" do
     it "can correctly turn from the west" do
       placement = construct(0, 0, :west)
