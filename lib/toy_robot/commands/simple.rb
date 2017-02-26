@@ -1,3 +1,5 @@
+# Construct a command from a proc. The result of action.call _must_ be a robot.
+
 module ToyRobot
   module Commands
     class Simple
