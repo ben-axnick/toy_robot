@@ -1,0 +1,12 @@
+version: '2'
+services:
+  bundle:
+    image: 'bentheax/minimal-ruby:2.3'
+    entrypoint: 'bundle'
+    volumes:
+      - '.:/app'
+  sh:
+    image: 'bentheax/minimal-ruby:2.3'
+    entrypoint: 'sh'
+    volumes:
+      - '.:/app'

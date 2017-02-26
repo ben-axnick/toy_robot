@@ -21,6 +21,16 @@ be prefixed by `bundle exec`. Two modes of interaction are supported:
 - Start interactively: `bundle exec ./exe/toy_robot`
 - Stream input via stdin: `echo "FOO\nBAR" | bundle exec ./exe/toy_robot` 
 
+### Docker
+
+If you prefer, you can utilise a Docker container:
+
+```sh
+docker-compose run --rm bundle install
+docker-compose run --rm bundle exec rake
+docker-compose run --rm bundle exec ./exe/toy_robot
+```
+
 ## Testing
 
 Continuous:
